@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR-Code & Barcode Scanner (Testversion)</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0071e3">
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
     * {
@@ -143,10 +145,19 @@
     <strong>Testversion</strong><br>
     Einfache Browser-App zum Einlesen von QR-Codes und Strichcodes mit der Kamera.<br><br>
     <strong>Erkannte Codes:</strong><br>
-    QR-Code, EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, ITF, PDF417, Data Matrix, Aztec und weitere gängige Formate.
+    QR-Code, EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, ITF, PDF417, Data Matrix, Aztec und weitere gängige Formate.<br><br>
+    <small>Nach dem ersten Laden funktioniert die App auch offline.</small>
   </div>
 
   <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log('Service Worker registered'))
+          .catch(err => console.log('Service Worker failed', err));
+      });
+    }
+
     const html5QrCode = new Html5Qrcode("reader");
     const startButton = document.getElementById("startButton");
     const stopButton = document.getElementById("stopButton");
