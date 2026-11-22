@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR-Code Scanner</title>
+  <title>QR-Code Scanner (Testversion)</title>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
     * {
@@ -23,6 +23,14 @@
     h1 {
       margin-top: 0;
       font-size: 1.8rem;
+      text-align: center;
+    }
+    h1 .test {
+      display: block;
+      font-size: 0.9rem;
+      color: #ff3b30;
+      font-weight: 600;
+      margin-top: 4px;
     }
     #reader {
       width: 100%;
@@ -71,10 +79,30 @@
       color: #666;
       font-size: 0.9rem;
     }
+    .footer {
+      margin-top: 40px;
+      padding: 16px 20px;
+      background: white;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      font-size: 0.9rem;
+      color: #555;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .footer a {
+      color: #0071e3;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <h1>QR-Code Scanner</h1>
+  <h1>QR-Code Scanner <span class="test">Testversion</span></h1>
   
   <div id="reader"></div>
   
@@ -87,6 +115,13 @@
   </div>
   
   <div class="status" id="status">Klicke auf „Scanner starten“ und erlaube den Kamerazugriff.</div>
+
+  <div class="footer">
+    <strong>Testversion</strong><br>
+    Einfache Browser-App zum Einlesen von QR-Codes mit der Kamera.<br>
+    Direkt ausführen: <a href="https://carlostea-wwe.github.io/qr-code-scanner/" target="_blank">https://carlostea-wwe.github.io/qr-code-scanner/</a><br>
+    (GitHub Pages muss dafür aktiviert sein)
+  </div>
 
   <script>
     const html5QrCode = new Html5Qrcode("reader");
