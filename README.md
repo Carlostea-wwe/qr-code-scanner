@@ -6,8 +6,6 @@ Einfache Browser-App zum Einlesen von QR-Codes und Strichcodes mit der Kamera.
 
 [https://carlostea-wwe.github.io/qr-code-scanner/](https://carlostea-wwe.github.io/qr-code-scanner/)
 
-*(GitHub Pages muss dafür aktiviert sein)*
-
 ## Erkannte Codes
 
 - QR-Code
