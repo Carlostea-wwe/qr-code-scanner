@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR-Code Scanner (Testversion)</title>
+  <title>QR-Code & Barcode Scanner (Testversion)</title>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
     * {
@@ -31,6 +31,23 @@
       color: #ff3b30;
       font-weight: 600;
       margin-top: 4px;
+    }
+    .top-link {
+      margin: 12px 0 24px 0;
+      text-align: center;
+    }
+    .top-link a {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #0071e3;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .top-link a:hover {
+      background: #0077ed;
     }
     #reader {
       width: 100%;
@@ -87,28 +104,19 @@
       max-width: 500px;
       width: 100%;
       box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #555;
       text-align: center;
       line-height: 1.6;
     }
-    .footer a.direct-link {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 12px 24px;
-      background: #0071e3;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-    }
-    .footer a.direct-link:hover {
-      background: #0077ed;
-    }
   </style>
 </head>
 <body>
-  <h1>QR-Code Scanner <span class="test">Testversion</span></h1>
+  <h1>QR-Code & Barcode Scanner <span class="test">Testversion</span></h1>
+
+  <div class="top-link">
+    <a href="https://carlostea-wwe.github.io/qr-code-scanner/" target="_blank">Direkt ausführen</a>
+  </div>
   
   <div id="reader"></div>
   
@@ -117,16 +125,17 @@
   
   <div id="result">
     <strong>Ergebnis:</strong>
-    <span id="resultText">Noch kein QR-Code erkannt.</span>
+    <span id="resultText">Noch kein Code erkannt.</span>
   </div>
   
   <div class="status" id="status">Klicke auf „Scanner starten“ und erlaube den Kamerazugriff.</div>
 
   <div class="footer">
     <strong>Testversion</strong><br>
-    Einfache Browser-App zum Einlesen von QR-Codes mit der Kamera.<br>
-    <a class="direct-link" href="https://carlostea-wwe.github.io/qr-code-scanner/" target="_blank">Direkt ausführen</a><br>
-    <small>(GitHub Pages muss dafür aktiviert sein)</small>
+    Einfache Browser-App zum Einlesen von QR-Codes und Strichcodes mit der Kamera.<br><br>
+    <strong>Erkannte Codes:</strong><br>
+    QR-Code, EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, ITF, PDF417, Data Matrix, Aztec und weitere gängige Formate.<br><br>
+    <small>(GitHub Pages muss für den direkten Link aktiviert sein)</small>
   </div>
 
   <script>
@@ -149,26 +158,21 @@
         statusEl.textContent = "Kamera wird gestartet…";
         
         await html5QrCode.start(
-          { facingMode: "environment" }, // Rückkamera bevorzugen
+          { facingMode: "environment" },
           config,
           (decodedText, decodedResult) => {
-            // QR-Code erfolgreich gelesen
             resultText.textContent = decodedText;
-            statusEl.textContent = "QR-Code erkannt!";
-            
-            // Optional: Scanner nach erfolgreichem Scan automatisch stoppen
-            // stopScanning();
+            statusEl.textContent = "Code erkannt!";
           },
           (errorMessage) => {
-            // Fehler beim Scannen (normal, solange kein Code im Bild ist)
-            // statusEl.textContent = "Suche nach QR-Code…";
+            // Normal während der Suche
           }
         );
 
         isScanning = true;
         startButton.disabled = true;
         stopButton.disabled = false;
-        statusEl.textContent = "Scanner aktiv – halte den QR-Code in den Rahmen.";
+        statusEl.textContent = "Scanner aktiv – halte den Code in den Rahmen.";
       } catch (err) {
         console.error(err);
         statusEl.textContent = "Fehler: " + (err.message || err);
@@ -193,7 +197,6 @@
     startButton.addEventListener("click", startScanning);
     stopButton.addEventListener("click", stopScanning);
 
-    // Beim Verlassen der Seite aufräumen
     window.addEventListener("beforeunload", () => {
       if (isScanning) html5QrCode.stop();
     });
