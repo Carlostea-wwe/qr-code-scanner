@@ -1,10 +1,8 @@
-# QR-Code & Barcode Scanner (Testversion)
+# QR-Code & Barcode Scanner
 
 Einfache Browser-App zum Einlesen von QR-Codes und Strichcodes mit der Kamera.
 
-## Direkt ausführen
-
-[https://carlostea-wwe.github.io/qr-code-scanner/](https://carlostea-wwe.github.io/qr-code-scanner/)
+**App öffnen:** [https://carlostea-wwe.github.io/qr-code-scanner/](https://carlostea-wwe.github.io/qr-code-scanner/)
 
 ## Erkannte Codes
 
@@ -19,6 +17,4 @@ Einfache Browser-App zum Einlesen von QR-Codes und Strichcodes mit der Kamera.
 - Aztec
 - und weitere gängige Formate
 
-## Hinweis
-
-Dies ist eine **Testversion**.
+Version 1.0 · 22. November 2026
