@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR-Code & Barcode Scanner (Testversion)</title>
+  <title>QR-Code & Barcode Scanner</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0071e3">
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
@@ -26,13 +26,6 @@
       margin-top: 0;
       font-size: 1.8rem;
       text-align: center;
-    }
-    h1 .test {
-      display: block;
-      font-size: 0.9rem;
-      color: #ff3b30;
-      font-weight: 600;
-      margin-top: 4px;
     }
     #reader {
       width: 100%;
@@ -112,7 +105,7 @@
   </style>
 </head>
 <body>
-  <h1>QR-Code & Barcode Scanner <span class="test">Testversion</span></h1>
+  <h1>QR-Code & Barcode Scanner</h1>
 
   <div id="reader"></div>
   
@@ -127,7 +120,6 @@
   <div class="status" id="status">Klicke auf „Scanner starten“ und erlaube den Kamerazugriff.</div>
 
   <div class="footer">
-    <strong>Testversion</strong><br>
     Einfache Browser-App zum Einlesen von QR-Codes und Strichcodes mit der Kamera.<br><br>
     <strong>Erkannte Codes:</strong><br>
     QR-Code, EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, ITF, PDF417, Data Matrix, Aztec und weitere gängige Formate.<br><br>
