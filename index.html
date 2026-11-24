@@ -189,8 +189,13 @@
       }
     }
 
+    function clearResult() {
+      resultText.textContent = "Noch kein Code erkannt.";
+    }
+
     async function startScanning() {
       try {
+        clearResult();
         statusEl.textContent = "Kamera wird gestartet…";
         
         await html5QrCode.start(
