@@ -65,6 +65,9 @@
       color: #0071e3;
       text-decoration: underline;
       font-weight: 600;
+      pointer-events: auto;
+      cursor: pointer;
+      display: inline;
     }
     button {
       margin-top: 20px;
@@ -140,7 +143,7 @@
     <strong>Erkannte Codes:</strong><br>
     QR-Code, EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, ITF, PDF417, Data Matrix, Aztec und weitere gängige Formate.<br><br>
     <small>Nach dem ersten Laden funktioniert die App auch offline.</small>
-    <div class="version">Version 1.1 · 24. November 2026</div>
+    <div class="version">Version 1.2 · 24. November 2026</div>
   </div>
 
   <script>
@@ -168,7 +171,7 @@
 
     function isUrl(text) {
       try {
-        const url = new URL(text);
+        const url = new URL(text.trim());
         return url.protocol === "http:" || url.protocol === "https:";
       } catch {
         return false;
@@ -177,20 +180,32 @@
 
     function displayResult(text) {
       resultText.innerHTML = "";
-      if (isUrl(text)) {
+      const trimmed = text.trim();
+      if (isUrl(trimmed)) {
         const a = document.createElement("a");
-        a.href = text;
+        a.href = trimmed;
         a.target = "_blank";
         a.rel = "noopener noreferrer";
-        a.textContent = text;
+        a.textContent = trimmed;
+        a.style.pointerEvents = "auto";
         resultText.appendChild(a);
       } else {
-        resultText.textContent = text;
+        resultText.textContent = trimmed;
       }
     }
 
     function clearResult() {
       resultText.textContent = "Noch kein Code erkannt.";
+    }
+
+    function tryVibrate() {
+      if (navigator.vibrate) {
+        try {
+          navigator.vibrate([100, 50, 100]);
+        } catch (e) {
+          console.log("Vibration blocked or not supported");
+        }
+      }
     }
 
     async function startScanning() {
@@ -204,9 +219,7 @@
           (decodedText, decodedResult) => {
             displayResult(decodedText);
             statusEl.textContent = "Code erkannt!";
-            if (navigator.vibrate) {
-              navigator.vibrate(150);
-            }
+            tryVibrate();
           },
           (errorMessage) => {
             // Normal während der Suche
