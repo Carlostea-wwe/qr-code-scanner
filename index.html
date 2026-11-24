@@ -146,7 +146,7 @@
     <strong>Erkannte Codes:</strong><br>
     QR-Code, EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, ITF, PDF417, Data Matrix, Aztec und weitere gängige Formate.<br><br>
     <small>Nach dem ersten Laden funktioniert die App auch offline.</small>
-    <div class="version">Version 1.3 · 24. November 2026</div>
+    <div class="version">Version 1.4 · 24. November 2026</div>
   </div>
 
   <script>
@@ -172,24 +172,32 @@
       aspectRatio: 1.0
     };
 
-    function isUrl(text) {
-      try {
-        const url = new URL(text.trim());
-        return url.protocol === "http:" || url.protocol === "https:";
-      } catch {
-        return false;
+    function looksLikeDomain(text) {
+      const domainRegex = /^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/.*)?$/;
+      return domainRegex.test(text.trim()) && !text.includes(" ");
+    }
+
+    function normalizeUrl(text) {
+      const trimmed = text.trim();
+      if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+        return trimmed;
       }
+      if (looksLikeDomain(trimmed)) {
+        return "https://" + trimmed;
+      }
+      return null;
     }
 
     function displayResult(text) {
       resultText.innerHTML = "";
       const trimmed = text.trim();
-      if (isUrl(trimmed)) {
+      const url = normalizeUrl(trimmed);
+      if (url) {
         const span = document.createElement("span");
         span.className = "link-result";
         span.textContent = trimmed;
         span.onclick = () => {
-          window.open(trimmed, "_blank", "noopener,noreferrer");
+          window.open(url, "_blank", "noopener,noreferrer");
         };
         resultText.appendChild(span);
       } else {
