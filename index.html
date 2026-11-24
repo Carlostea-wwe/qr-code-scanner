@@ -61,6 +61,11 @@
       white-space: pre-wrap;
       font-size: 1.4rem;
     }
+    #resultText a {
+      color: #0071e3;
+      text-decoration: underline;
+      font-weight: 600;
+    }
     button {
       margin-top: 20px;
       padding: 12px 28px;
@@ -135,7 +140,7 @@
     <strong>Erkannte Codes:</strong><br>
     QR-Code, EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, ITF, PDF417, Data Matrix, Aztec und weitere gängige Formate.<br><br>
     <small>Nach dem ersten Laden funktioniert die App auch offline.</small>
-    <div class="version">Version 1.0 · 22. November 2026</div>
+    <div class="version">Version 1.1 · 24. November 2026</div>
   </div>
 
   <script>
@@ -161,6 +166,29 @@
       aspectRatio: 1.0
     };
 
+    function isUrl(text) {
+      try {
+        const url = new URL(text);
+        return url.protocol === "http:" || url.protocol === "https:";
+      } catch {
+        return false;
+      }
+    }
+
+    function displayResult(text) {
+      resultText.innerHTML = "";
+      if (isUrl(text)) {
+        const a = document.createElement("a");
+        a.href = text;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = text;
+        resultText.appendChild(a);
+      } else {
+        resultText.textContent = text;
+      }
+    }
+
     async function startScanning() {
       try {
         statusEl.textContent = "Kamera wird gestartet…";
@@ -169,8 +197,11 @@
           { facingMode: "environment" },
           config,
           (decodedText, decodedResult) => {
-            resultText.textContent = decodedText;
+            displayResult(decodedText);
             statusEl.textContent = "Code erkannt!";
+            if (navigator.vibrate) {
+              navigator.vibrate(150);
+            }
           },
           (errorMessage) => {
             // Normal während der Suche
