@@ -201,16 +201,6 @@
       resultText.textContent = "Noch kein Code erkannt.";
     }
 
-    function tryVibrate() {
-      if (navigator.vibrate) {
-        try {
-          navigator.vibrate([100, 50, 100]);
-        } catch (e) {
-          // Vibration oft vom Browser blockiert, wenn kein direkter User-Klick
-        }
-      }
-    }
-
     async function startScanning() {
       try {
         clearResult();
@@ -222,7 +212,6 @@
           (decodedText, decodedResult) => {
             displayResult(decodedText);
             statusEl.textContent = "Code erkannt!";
-            tryVibrate();
           },
           (errorMessage) => {
             // Normal während der Suche
